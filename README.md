@@ -6,6 +6,7 @@
  - Parse Json with the native JSONDecoder.
  - Use computd properties, closure and extentions.
  - Use Core Location to get the GPS data.
+ - For NetworkLayer use URLSession 
 
 # Requirements
 1. Xcode 12
