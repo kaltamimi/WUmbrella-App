@@ -14,6 +14,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var stackTemerature: UIStackView!
     
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
@@ -21,14 +22,29 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        stackTemerature.isHidden = true
+        conditionImageView.isHidden = true
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
 
         weatherManager.delegate = self
         searchTextField.delegate = self
+        
+     //   self.hideKeyboardWhenTappedAround()
     }
-
+    
+    
+//    @objc func hideKeyboardWhenTappedAround() {
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
+//        tap.cancelsTouchesInView = false
+//        view.addGestureRecognizer(tap)
+//    }
+//
+//    @objc func dismissKeyboard() {
+//        view.endEditing(true)
+//    }
     
     @IBAction func searchPressed(_ sender: UIButton) {
         //Dismiss Keyboard
@@ -50,17 +66,17 @@ extension WeatherViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //Dismiss Keyboard
         searchTextField.endEditing(true)
-        print(searchTextField.text!)
+        
         return true
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if textField.text != "" {
-            return true
-        } else {
+       if textField.text == "" {
             textField.placeholder = "Type location"
-            return false
+           // searchTextField.endEditing(true)
+            return true
         }
+        return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -83,6 +99,8 @@ extension WeatherViewController: WeatherManagerDelegate {
             self.temperatureLabel.text = weather.temperatureString
             self.conditionImageView.image = UIImage(systemName: weather.conditionName)
             self.cityLabel.text = weather.cityName
+            self.conditionImageView.isHidden = false
+            self.stackTemerature.isHidden = false
         }
     }
     
@@ -102,6 +120,8 @@ extension WeatherViewController: CLLocationManagerDelegate {
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
             weatherManager.fetchWeather(latitude: lat, longitude: lon)
+            self.conditionImageView.isHidden = false
+            self.stackTemerature.isHidden = false
         }
     }
     
