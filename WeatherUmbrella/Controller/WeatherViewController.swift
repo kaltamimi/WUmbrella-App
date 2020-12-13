@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController {
+class WeatherViewController: UIViewController, UIViewControllerTransitioningDelegate {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -16,11 +16,17 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var stackTemerature: UIStackView!
     
+    
+    @IBOutlet weak var menuButton: UIButton!
+    
+    let transition = CircularTransition()
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        menuButton.layer.cornerRadius = menuButton.frame.size.width / 2
         
         stackTemerature.isHidden = true
         conditionImageView.isHidden = true
@@ -55,6 +61,30 @@ class WeatherViewController: UIViewController {
     @IBAction func locationPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            let secondVC = segue.destination as! ForecastViewController
+            secondVC.transitioningDelegate = self
+            secondVC.modalPresentationStyle = .custom
+        }
+        
+        
+        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            transition.transitionMode = .present
+            transition.startingPoint = menuButton.center
+            transition.circleColor = menuButton.backgroundColor!
+            
+            return transition
+        }
+        
+        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            transition.transitionMode = .dismiss
+            transition.startingPoint = menuButton.center
+            transition.circleColor = menuButton.backgroundColor!
+            
+            return transition
+        }
     
     
 }
