@@ -9,18 +9,24 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController {
-
+    
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var stackTemerature: UIStackView!
     
+    
+    @IBOutlet weak var menuButton: UIButton!
+    
+    let transition = CircularTransition()
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        menuButton.layer.cornerRadius = menuButton.frame.size.width / 2
         
         stackTemerature.isHidden = true
         conditionImageView.isHidden = true
@@ -28,23 +34,23 @@ class WeatherViewController: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
-
+        
         weatherManager.delegate = self
         searchTextField.delegate = self
         
-     //   self.hideKeyboardWhenTappedAround()
+        //   self.hideKeyboardWhenTappedAround()
     }
     
     
-//    @objc func hideKeyboardWhenTappedAround() {
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
-//        tap.cancelsTouchesInView = false
-//        view.addGestureRecognizer(tap)
-//    }
-//
-//    @objc func dismissKeyboard() {
-//        view.endEditing(true)
-//    }
+    //    @objc func hideKeyboardWhenTappedAround() {
+    //        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboard))
+    //        tap.cancelsTouchesInView = false
+    //        view.addGestureRecognizer(tap)
+    //    }
+    //
+    //    @objc func dismissKeyboard() {
+    //        view.endEditing(true)
+    //    }
     
     @IBAction func searchPressed(_ sender: UIButton) {
         //Dismiss Keyboard
@@ -56,6 +62,33 @@ class WeatherViewController: UIViewController {
         locationManager.requestLocation()
     }
     
+}
+
+//MARK: - TransitioningDelegate
+extension WeatherViewController : UIViewControllerTransitioningDelegate {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let secondVC = segue.destination as! ForecastViewController
+        secondVC.transitioningDelegate = self
+        secondVC.modalPresentationStyle = .custom
+    }
+    
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .present
+        transition.startingPoint = menuButton.center
+        transition.circleColor = menuButton.backgroundColor!
+        
+        return transition
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .dismiss
+        transition.startingPoint = menuButton.center
+        transition.circleColor = menuButton.backgroundColor!
+        
+        return transition
+    }
     
 }
 
@@ -71,9 +104,9 @@ extension WeatherViewController : UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-       if textField.text == "" {
+        if textField.text == "" {
             textField.placeholder = "Type location"
-           // searchTextField.endEditing(true)
+            // searchTextField.endEditing(true)
             return true
         }
         return true
@@ -87,7 +120,7 @@ extension WeatherViewController : UITextFieldDelegate {
         
         searchTextField.text = ""
     }
-
+    
 }
 
 //MARK: - WeatherManagerDelegate
@@ -107,13 +140,13 @@ extension WeatherViewController: WeatherManagerDelegate {
     func didFailWithError(error: Error) {
         print(error)
     }
-  
+    
 }
 
 //MARK: - CLLocationManagerDelegate
 
 extension WeatherViewController: CLLocationManagerDelegate {
- 
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
