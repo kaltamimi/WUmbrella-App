@@ -115,7 +115,8 @@ extension WeatherViewController : UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         if let city = searchTextField.text {
-            weatherManager.fetchWeather(cityName: city)
+            weatherManager.getWeather(cityName: city)
+            weatherManager.getForecast(cityName: city)
         }
         
         searchTextField.text = ""
@@ -152,7 +153,8 @@ extension WeatherViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
-            weatherManager.fetchWeather(latitude: lat, longitude: lon)
+            weatherManager.getWeather(latitude: lat, longitude: lon)
+            weatherManager.getForecast(latitude: lat, longitude: lon)
             self.conditionImageView.isHidden = false
             self.stackTemerature.isHidden = false
         }

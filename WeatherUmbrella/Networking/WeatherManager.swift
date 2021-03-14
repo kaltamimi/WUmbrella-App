@@ -19,7 +19,7 @@ class WeatherManager {
     
     var delegate : WeatherManagerDelegate?
     
-    func fetchWeather(cityName: String){
+    func getWeather(cityName: String){
         
         NetworkService.request(router: .getCityWeather(cityName: cityName)) { (result: WeatherData) in
             let id = result.weather[0].id
@@ -32,7 +32,7 @@ class WeatherManager {
         
     }
     
-    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees){
+    func getWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees){
         
         NetworkService.request(router: Router.getLocationWeather(latitude: "\(latitude)", longitude: "\(longitude)")) { (result: WeatherData ) in
             let id = result.weather[0].id
@@ -42,6 +42,20 @@ class WeatherManager {
             let weather = WeatherModel(conditionId: id, cityName: name, temperature: temp)
             self.delegate?.didUpdateWeather(self, weather: weather)
         }
+        
+    }
+    
+    func getForecast(cityName: String){
+        
+        
+        NetworkService.request(router: .getForecast(cityName: cityName)) { (result: [WeatherData]) in
+            
+            
+        }
+    }
+    
+    
+    func getForecast(latitude: CLLocationDegrees, longitude: CLLocationDegrees){
         
     }
     
