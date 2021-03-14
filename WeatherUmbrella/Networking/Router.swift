@@ -13,17 +13,18 @@ enum Router {
     case getCityWeather(cityName: String)
     case getLocationWeather(latitude: String, longitude: String)
     case getForecast(cityName: String)
+    case getLocationForecast(latitude: String, longitude: String)
     
     var scheme: String {
         switch self {
-        case .getCityWeather , .getLocationWeather , .getForecast:
+        case .getCityWeather , .getLocationWeather , .getForecast, .getLocationForecast:
             return "https"
         }
     }
     
     var host: String {
         switch self {
-        case .getCityWeather , .getLocationWeather , .getForecast:
+        case .getCityWeather , .getLocationWeather , .getForecast, .getLocationForecast:
             return "api.openweathermap.org"
         }
     }
@@ -32,7 +33,7 @@ enum Router {
         switch self {
         case .getCityWeather, .getLocationWeather:
             return "/data/2.5/weather"
-        case .getForecast:
+        case .getForecast, .getLocationForecast:
             return "/data/2.5/forecast"
         }
     }
@@ -60,6 +61,14 @@ enum Router {
             return [URLQueryItem(name: "units", value: "metric"),
                     URLQueryItem(name: "appid", value: Secret.API_KEY),
                     URLQueryItem(name: "q", value: cityName)]
+            
+        case .getLocationForecast(let latitude, let longitude):
+            return [
+                URLQueryItem(name: "units", value: "metric"),
+                URLQueryItem(name: "appid", value: Secret.API_KEY),
+                URLQueryItem(name: "lat", value: latitude),
+                URLQueryItem(name: "lon", value: longitude)]
+            
         }
     }
     

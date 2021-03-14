@@ -201,30 +201,83 @@
                                     <action selector="dismissSecondVC:" destination="0El-ob-V9Q" eventType="touchUpInside" id="AFd-1v-Vww"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fcL-u7-xWq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="604"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ForecastCell" rowHeight="77" id="n4S-Q3-BUB" customClass="ForecastCell" customModule="WeatherUmbrella" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="77"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n4S-Q3-BUB" id="iP8-Dj-0HA">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="171" translatesAutoresizingMaskIntoConstraints="NO" id="O1O-jg-xjd">
+                                                    <rect key="frame" x="16" y="4" width="343" height="69"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23 ° C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKf-Kh-G21">
+                                                            <rect key="frame" x="0.0" y="22.666666666666671" width="142" height="24"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud.fog" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="FCI-e1-yOE">
+                                                            <rect key="frame" x="313" y="20.333333333333332" width="30" height="30.333333333333353"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="J7L-WP-psK"/>
+                                                                <constraint firstAttribute="width" constant="30" id="fGn-1t-8WP"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="O1O-jg-xjd" secondAttribute="bottom" constant="4" id="6Sw-qb-fLK"/>
+                                                <constraint firstItem="O1O-jg-xjd" firstAttribute="top" secondItem="iP8-Dj-0HA" secondAttribute="top" constant="4" id="UDh-CR-dsX"/>
+                                                <constraint firstItem="O1O-jg-xjd" firstAttribute="leading" secondItem="iP8-Dj-0HA" secondAttribute="leading" constant="16" id="nan-qO-xgp"/>
+                                                <constraint firstAttribute="trailing" secondItem="O1O-jg-xjd" secondAttribute="trailing" constant="16" id="wiT-PA-xIQ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="conditionImage" destination="FCI-e1-yOE" id="DdI-xC-8pD"/>
+                                            <outlet property="tempLabel" destination="HKf-Kh-G21" id="whp-Ip-HNX"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zsU-1n-ky2"/>
                         <color key="backgroundColor" name="backgroundColor"/>
                         <constraints>
+                            <constraint firstItem="fcL-u7-xWq" firstAttribute="leading" secondItem="zsU-1n-ky2" secondAttribute="leading" id="B5W-9k-bIe"/>
+                            <constraint firstItem="3aE-8r-WWr" firstAttribute="top" secondItem="fcL-u7-xWq" secondAttribute="bottom" constant="30" id="CIc-kz-snf"/>
+                            <constraint firstItem="fcL-u7-xWq" firstAttribute="trailing" secondItem="zsU-1n-ky2" secondAttribute="trailing" id="dvd-cc-By8"/>
                             <constraint firstItem="3aE-8r-WWr" firstAttribute="centerX" secondItem="R18-gj-GVr" secondAttribute="centerX" id="n5q-FE-Rj2"/>
                             <constraint firstItem="zsU-1n-ky2" firstAttribute="bottom" secondItem="3aE-8r-WWr" secondAttribute="bottom" constant="50" id="qen-Db-Pm5"/>
+                            <constraint firstItem="fcL-u7-xWq" firstAttribute="top" secondItem="zsU-1n-ky2" secondAttribute="top" id="uY9-7g-SdU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Dky-OM-5DI"/>
                     <connections>
                         <outlet property="dismissButton" destination="3aE-8r-WWr" id="VWG-Lt-bqh"/>
+                        <outlet property="tableView" destination="fcL-u7-xWq" id="tlx-1N-Jig"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FaY-gm-gSh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="950" y="100"/>
+            <point key="canvasLocation" x="949.60000000000002" y="99.753694581280797"/>
         </scene>
     </scenes>
     <resources>
         <image name="background" width="475" height="843"/>
+        <image name="cloud.fog" catalog="system" width="128" height="119"/>
         <image name="location.circle.fill" catalog="system" width="128" height="121"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <namedColor name="backgroundColor">
-            <color red="0.77346217630000003" green="0.91017204519999995" blue="0.88627415899999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.77300000190734863" green="0.9100000262260437" blue="0.88599997758865356" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="redColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
